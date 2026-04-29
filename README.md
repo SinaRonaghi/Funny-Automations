@@ -12,7 +12,7 @@ To save our sanity, we pivoted. We drafted scripts for every slide and fed them 
 
 ### The "Speech.wav" Problem
 
-VertexAI is great at audio, but terrible at file naming. Every download is a repetitive `speech.wav`, `speech (1).wav`, and so on. To make matters worse, I had a universal `Final.wav` for the closing slides that needed to play last.
+VertexAI is great at audio, and not as great in file naming. Every download is a repetitive `speech.wav`, `speech (1).wav`, and so on. To make matters worse, I had a universal `Final.wav` for the closing slides that needed to play last.
 
 Rather than rewriting a complex sorting algorithm, I took the path of least resistance:
 
