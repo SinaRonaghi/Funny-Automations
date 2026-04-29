@@ -4,6 +4,31 @@ Tiny Windows automations for the last mile of academic slide production: renamin
 
 This repo is intentionally practical and a little theatrical. The real goal is simple: take a stack of professor slides and turn them into a narrated, synchronized, exportable presentation with as little manual clicking as possible.
 
+## A bit of a context
+
+This project was born out of a European research initiative and a looming mountain of educational deliverables. The original plan was traditional: write slides, hire a human presenter, and record sessions one by one. It was a logistical nightmare and a massive time-sink.
+
+To save our sanity, we pivoted. We drafted scripts for every slide and fed them into VertexAI’s Chirp 3 model. Suddenly, we had high-quality, human-like audio, but we also had a new problem: The Manual Integration Grind.
+
+### The "Speech.wav" Problem
+
+VertexAI is great at audio, but terrible at file naming. Every download is a repetitive `speech.wav`, `speech (1).wav`, and so on. To make matters worse, I had a universal `Final.wav` for the closing slides that needed to play last.
+
+Rather than rewriting a complex sorting algorithm, I took the path of least resistance:
+
+- `speech.wav` becomes `speech (0).wav`
+- `Final.wav` becomes `zz.wav` (because alphabetical sorting is a developer's best friend)
+
+### The Solution
+
+This repo automates the "boring stuff" that happens between having an audio file and having a finished video:
+
+- **rename.bat**: A quick-and-dirty script to fix the VertexAI naming conventions so they play nice with Windows sorting.
+- **process_presentation.py**: The heavy lifter. Using `pywin32`, it injects the audio into PowerPoint, sets the transition to Push Up, and forces the playback sequence to "Start With Previous."
+
+The result? A fully synchronized video export without the thousand-click headache.
+
+
 ## What lives here
 
 - [process_presentation.py](process_presentation.py) opens a PowerPoint deck, inserts `.wav` narration files, sets each slide to a push-up transition, makes the audio play with previous, saves an intermediate deck, and exports a video.
