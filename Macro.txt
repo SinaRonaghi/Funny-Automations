@@ -1,0 +1,42 @@
+VBA Macro to automatically set the audio animation to 'With Previous' and apply a push transition to all slides.
+- Press Alt + F11
+- Top menu > Insert > Module
+- Paste the code
+- Save
+- Execute via F5
+-----------------------------
+
+Sub FixAudioAndTransition()
+    Dim sld As Slide
+    Dim eff As Effect
+    Dim count As Integer
+    count = 0
+
+    On Error Resume Next ' Prevents the code from stopping if a slide is corrupted
+    
+    For Each sld In ActivePresentation.Slides
+        
+        ' 1. Set Transition to Push (Up)
+        ' 3332 is the numeric constant for ppEffectPushUp
+        sld.SlideShowTransition.EntryEffect = 3332
+        
+        ' 2. Loop through animations to find audio
+        For Each eff In sld.TimeLine.MainSequence
+            
+            ' 83 is the numeric constant for msoAnimEffectMediaPlay
+            If eff.EffectType = 83 Then
+                
+                ' 1 is the numeric constant for msoAnimTriggerWithPrevious
+                eff.Timing.TriggerType = msoAnimTriggerWithPrevious
+                count = count + 1
+                
+            End If
+        Next eff
+        
+    Next sld
+
+    MsgBox "Process complete!" & vbCrLf & _
+           "- All slides set to Push transition." & vbCrLf & _
+           "- " & count & " audio triggers updated.", vbInformation
+End Sub
+

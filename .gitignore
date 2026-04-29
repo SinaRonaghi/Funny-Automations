@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+
+# PowerPoint / media outputs
+*_int.pptx
+*_video.mp4
+~$*.pptx
+
+# Local noise
+.vscode/
+.DS_Store
