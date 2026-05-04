@@ -48,6 +48,11 @@ def wait_for_video_export(presentation):
             return status
         time.sleep(2)
 
+def get_base_dir():
+    if "__file__" in globals():
+        return os.path.dirname(os.path.abspath(__file__))
+    return os.getcwd()
+
 def main():
     pp_app = None
     try:
@@ -60,13 +65,16 @@ def main():
 
     presentation = None
     try:
-        current_dir = os.getcwd()
+        current_dir = get_base_dir()
         all_pptx = glob.glob(os.path.join(current_dir, "*.pptx"))
         valid_files = [f for f in all_pptx if not f.endswith('_int.pptx')]
 
         if not valid_files:
-            print("No input .pptx files found.")
-            return
+            fallback_files = glob.glob(os.path.join(os.getcwd(), "*.pptx"))
+            valid_files = [f for f in fallback_files if not f.endswith('_int.pptx')]
+            if not valid_files:
+                print(f"No input .pptx file found in {current_dir} or the current working directory.")
+                return
 
         input_path = os.path.abspath(valid_files[0])
         output_path = input_path.replace(".pptx", "_int.pptx")
