@@ -52,7 +52,8 @@ def main():
     pp_app = None
     try:
         pp_app = win32com.client.Dispatch("PowerPoint.Application")
-        pp_app.Visible = False
+        # Do not hide PowerPoint - some environments disallow hiding the window
+        pp_app.Visible = True
     except Exception as e:
         print(f"Error: {e}")
         return
